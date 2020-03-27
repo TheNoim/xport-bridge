@@ -2,8 +2,8 @@ import {
     BadRequestException,
     Controller,
     Get,
+    Param,
     Post,
-    Query,
 } from '@nestjs/common';
 import { OpenhabState } from './outlet.openhab.enum';
 import { OutletOpenhabService } from './outlet.openhab.service';
@@ -12,10 +12,10 @@ import { OutletOpenhabService } from './outlet.openhab.service';
 export class OutletOpenhabController {
     constructor(private readonly outletOpenhabService: OutletOpenhabService) {}
 
-    @Post()
+    @Post(':name/:value')
     async setOutlet(
-        @Query('value') value: string,
-        @Query('name') name: string,
+        @Param('name') name: string,
+        @Param('value') value: string,
     ) {
         if (value === OpenhabState.ON || value === OpenhabState.OFF) {
             return await this.outletOpenhabService.setValueForOutlet(
@@ -27,8 +27,8 @@ export class OutletOpenhabController {
         }
     }
 
-    @Get()
-    async getValue(@Query('name') name: string) {
+    @Get(':name')
+    async getValue(@Param('name') name: string) {
         return await this.outletOpenhabService.getValueForOutlet(name);
     }
 }
