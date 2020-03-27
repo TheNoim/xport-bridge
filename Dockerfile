@@ -20,7 +20,10 @@ RUN yarn build && \
     mv tsconfig.json /build && \
     mv config/ /build && \
     mv nest-cli.json /build && \
-    mv temp/ /build
+    mv temp/ /build && \
+    mv tsconfig.build.json /build && \
+    mv tsconfig.json /build && \
+    mv nuxt.config.ts /build
 
 
 FROM node:13-alpine as app
