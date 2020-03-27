@@ -3,3 +3,4 @@ dist/
 nuxt-dist/
 nuxt-static/
 temp/
+Dockerfile
