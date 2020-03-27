@@ -9,7 +9,10 @@ const config: Configuration = {
     },
     modules: ['bootstrap-vue/nuxt', '@nuxtjs/axios',],
     mode: 'spa',
-    modern: 'client'
+    modern: 'client',
+    axios: {
+        proxy: true
+    }
 };
 
 export default config;
