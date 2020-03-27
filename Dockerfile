@@ -11,8 +11,9 @@ RUN yarn
 ADD . .
 
 RUN yarn build && \
-    yarn build:mikro-orm-cache && \
-    mkdir /build && \
+    yarn build:mikro-orm-cache
+
+RUN mkdir /build && \
     mv nuxt-static/ /build && \
     mv dist/ /build && \
     mv node_modules/ /build && \
@@ -24,7 +25,6 @@ RUN yarn build && \
     mv tsconfig.build.json /build && \
     mv tsconfig.json /build && \
     mv nuxt.config.ts /build
-
 
 FROM node:13-alpine as app
 
