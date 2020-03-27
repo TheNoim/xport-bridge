@@ -20,13 +20,13 @@ export class OutletOpenhabService {
         const outlet = await this.outletService.get(name);
         const value = getPrimitiveFromOpenhabState(state);
         const nativeValue = value ? 1 : 0;
+        await this.outletService.setValue(name, value);
         await this.nativeSwitchService.setValueForAddress(
             outlet.nativeAddress,
             outlet.nativeChannel,
             nativeValue,
         );
         await this.nativeSwitchService.commitAddress(outlet.nativeAddress);
-        await this.outletService.setValue(name, value);
         return outlet;
     }
 

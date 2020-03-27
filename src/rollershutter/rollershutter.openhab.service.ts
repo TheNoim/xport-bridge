@@ -69,25 +69,25 @@ export class RollershutterOpenhabService {
                     ? RollershutterState.UP
                     : RollershutterState.STOP;
 
-            await this.nativeSwitchService.commitAddress(address);
             await this.rollershutterService.setValue(name, newState);
+            await this.nativeSwitchService.commitAddress(address);
         } else {
             if (state === RollershutterOpenhabEnum.UP) {
+                await this.rollershutterService.setValue(name, RollershutterState.UP);
                 await this.nativeSwitchService.setValueForAddress(
                     address,
                     directionChannel,
                     RollershutterDirections.UP,
                 );
                 await this.nativeSwitchService.commitAddress(address);
-                await this.rollershutterService.setValue(name, RollershutterState.UP);
             } else if (state === RollershutterOpenhabEnum.DOWN) {
+                await this.rollershutterService.setValue(name, RollershutterState.DOWN);
                 await this.nativeSwitchService.setValueForAddress(
                     address,
                     directionChannel,
                     RollershutterDirections.DOWN,
                 );
                 await this.nativeSwitchService.commitAddress(address);
-                await this.rollershutterService.setValue(name, RollershutterState.DOWN);
             } else {
                 await this.rollershutterService.setValue(name, RollershutterState.STOP);
             }
