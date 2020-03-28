@@ -18,10 +18,10 @@ export class Outlet {
     @Property({ type: Number, nullable: true })
     nativeChannel2?: Channels;
 
-    @Property()
+    @Property({ default: false })
     multiChannel: boolean = false;
 
-    @Property()
+    @Property({ default: false })
     value: boolean = false;
 
     [PrimaryKeyType]: [string];
