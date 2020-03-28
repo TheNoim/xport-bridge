@@ -26,6 +26,13 @@ export class OutletOpenhabService {
             outlet.nativeChannel,
             nativeValue,
         );
+        if (outlet.multiChannel && outlet.nativeChannel2) {
+            await this.nativeSwitchService.setValueForAddress(
+                outlet.nativeAddress,
+                outlet.nativeChannel2,
+                nativeValue,
+            );
+        }
         await this.nativeSwitchService.commitAddress(outlet.nativeAddress);
         return outlet;
     }

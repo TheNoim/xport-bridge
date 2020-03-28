@@ -22,6 +22,12 @@
                 <label for="nativeChannel">Channel</label>
                 <b-select v-model="form.nativeChannel" :options="channelOptions" id="nativeChannel"></b-select>
 
+                <label for="multiChannel">Anzahl an Channel</label>
+                <b-select v-model="form.multiChannel" :options="multiChannelOptions" id="multiChannel"></b-select>
+
+                <label for="nativeChannel2" v-if="form.multiChannel">Channel 2</label>
+                <b-select v-if="form.multiChannel" v-model="form.nativeChannel2" :options="channelOptions" id="nativeChannel2"></b-select>
+
                 <b-spinner label="Spinning" v-if="loading"></b-spinner>
 
                 <p v-if="error" v-html="error"></p>
@@ -42,7 +48,9 @@
                 name: "",
                 description: "",
                 nativeChannel: 1,
-                nativeAddress: null
+                nativeChannel2: 1,
+                nativeAddress: null,
+                multiChannel: false,
             },
             error: false,
             channelOptions: [
@@ -50,6 +58,10 @@
                 { value: 2, text: 'Channel 2' },
                 { value: 3, text: 'Channel 3' },
                 { value: 4, text: 'Channel 4' }
+            ],
+            multiChannelOptions: [
+                { value: false, text: '1 Channel' },
+                { value: true, text: '2 Channel' }
             ],
             loading: false,
         }),

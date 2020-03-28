@@ -1,5 +1,5 @@
 import {
-    IsAlphanumeric,
+    IsBoolean,
     IsIn,
     IsNumber,
     IsOptional,
@@ -23,4 +23,13 @@ export class OutletDto {
     @IsNumber({}, { always: true })
     @IsIn([1, 2, 3, 4], { always: true })
     nativeChannel?: number;
+
+    @IsOptional({ groups: ['update', 'create'] })
+    @IsNumber({}, { always: true })
+    @IsIn([1, 2, 3, 4], { always: true })
+    nativeChannel2?: number;
+
+    @IsOptional({ always: true })
+    @IsBoolean({ always: true })
+    multiChannel?: boolean;
 }

@@ -50,6 +50,17 @@ export default {
                 sortable: true,
             },
             {
+                key: 'nativeChannel2',
+                label: 'Channel 2',
+                sortable: true,
+            },
+            {
+                key: 'multiChannel',
+                label: 'Zwei Channel',
+                sortable: true,
+                formatter: (value) => value ? 'Ja' : 'Nein'
+            },
+            {
                 key: 'id',
                 label: ''
             }

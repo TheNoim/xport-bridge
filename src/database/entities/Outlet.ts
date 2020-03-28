@@ -15,6 +15,12 @@ export class Outlet {
     @Property({ type: Number })
     nativeChannel!: Channels;
 
+    @Property({ type: Number, nullable: true })
+    nativeChannel2?: Channels;
+
+    @Property()
+    multiChannel: boolean = false;
+
     @Property()
     value: boolean = false;
 
