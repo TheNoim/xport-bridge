@@ -11,7 +11,7 @@ import {
 import { Validation } from '../validation/pipe';
 import { ListDto } from '../list.dto';
 import { RollershutterService } from './rollershutter.service';
-import { RollershutterDto } from './rollershutter.dto';
+import { DoRollershutterDto, RollershutterDto } from './rollershutter.dto';
 
 @Controller('rollershutter')
 export class RollershutterController {
@@ -40,6 +40,11 @@ export class RollershutterController {
     @Get(':name')
     async get(@Param('name') name: string) {
         return await this.rollershutterService.get(name);
+    }
+
+    @Post('do/:name')
+    async do(@Param('name') name: string, @Body() payload: DoRollershutterDto) {
+        return await this.rollershutterService.setStateForRollershutter(name, payload.value);
     }
 
     @Get()

@@ -7,7 +7,7 @@ import {
     Post,
     Put,
 } from '@nestjs/common';
-import { OutletDto } from './outlet.dto';
+import { OutletDto, UpdateStateDto } from './outlet.dto';
 import { OutletService } from './outlet.service';
 import { ListDto } from '../list.dto';
 import { Validation } from '../validation/pipe';
@@ -37,6 +37,11 @@ export class OutletController {
     @Get(':name')
     async get(@Param('name') name: string) {
         return await this.outletService.get(name);
+    }
+
+    @Post("updateState/:name")
+    async updateState(@Param('name') name: string, @Body() payload: UpdateStateDto) {
+        return await this.outletService.setValueForOutlet(name, payload.value);
     }
 
     @Get()

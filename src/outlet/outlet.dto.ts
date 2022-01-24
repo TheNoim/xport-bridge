@@ -37,3 +37,8 @@ export class OutletDto {
     @IsString({ always: true })
     homeAssistantType?: string;
 }
+
+export class UpdateStateDto {
+    @IsBoolean()
+    value: boolean;
+}

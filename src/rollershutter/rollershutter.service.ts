@@ -8,10 +8,16 @@ import {
     Rollershutter,
     RollershutterState,
 } from '../database/entities/Rollershutter';
+import { NativeSwitchService } from '../native-switch/native-switch.service';
+import { RollershutterOpenhabEnum } from './rollershutter.openhab.enum';
+import { RollershutterDirections } from './rollershutter.openhab.service';
 
 @Injectable()
 export class RollershutterService {
-    constructor(private readonly db: DatabaseService) {}
+    constructor(
+        private readonly db: DatabaseService,
+        private readonly nativeSwitchService: NativeSwitchService,
+    ) {}
 
     public async create(
         rollershutterDto: RollershutterDto,
@@ -66,5 +72,94 @@ export class RollershutterService {
             entities,
             page: listDto.page,
         };
+    }
+
+    public async setStateForRollershutter(
+        name: string,
+        state: RollershutterOpenhabEnum,
+    ) {
+        const rollershutter = await this.get(name);
+        const address = rollershutter.nativeAddress;
+        const directionChannel = rollershutter.nativeChannel === 1 ? 1 : 3;
+        const controlChannel = rollershutter.nativeChannel === 1 ? 2 : 4;
+
+        if (rollershutter.supportsHalf) {
+            if (
+                state === RollershutterOpenhabEnum.DOWN &&
+                rollershutter.state !== RollershutterState.DOWN
+            ) {
+                await this.nativeSwitchService.setValueForAddress(
+                    address,
+                    directionChannel,
+                    RollershutterDirections.DOWN,
+                );
+                await this.nativeSwitchService.setValueForAddress(
+                    address,
+                    controlChannel,
+                    1,
+                );
+            } else if (
+                state === RollershutterOpenhabEnum.UP &&
+                rollershutter.state !== RollershutterState.UP
+            ) {
+                await this.nativeSwitchService.setValueForAddress(
+                    address,
+                    directionChannel,
+                    RollershutterDirections.UP,
+                );
+                await this.nativeSwitchService.setValueForAddress(
+                    address,
+                    controlChannel,
+                    1,
+                );
+            } else {
+                await this.nativeSwitchService.setValueForAddress(
+                    address,
+                    controlChannel,
+                    0,
+                );
+            }
+
+            const newState =
+                state === RollershutterOpenhabEnum.DOWN
+                    ? RollershutterState.DOWN
+                    : state === RollershutterOpenhabEnum.UP
+                    ? RollershutterState.UP
+                    : RollershutterState.STOP;
+
+            await this.setValue(name, newState);
+            await this.nativeSwitchService.commitAddress(address);
+        } else {
+            if (state === RollershutterOpenhabEnum.UP) {
+                await this.setValue(
+                    name,
+                    RollershutterState.UP,
+                );
+                await this.nativeSwitchService.setValueForAddress(
+                    address,
+                    directionChannel,
+                    RollershutterDirections.UP,
+                );
+                await this.nativeSwitchService.commitAddress(address);
+            } else if (state === RollershutterOpenhabEnum.DOWN) {
+                await this.setValue(
+                    name,
+                    RollershutterState.DOWN,
+                );
+                await this.nativeSwitchService.setValueForAddress(
+                    address,
+                    directionChannel,
+                    RollershutterDirections.DOWN,
+                );
+                await this.nativeSwitchService.commitAddress(address);
+            } else {
+                await this.setValue(
+                    name,
+                    RollershutterState.STOP,
+                );
+            }
+        }
+
+        return rollershutter;
     }
 }

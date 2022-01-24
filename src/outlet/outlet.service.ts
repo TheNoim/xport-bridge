@@ -5,10 +5,12 @@ import { OutletDto } from './outlet.dto';
 import { wrap } from 'mikro-orm';
 import { ListDto, ListResultDto } from '../list.dto';
 import { plainToClass } from 'class-transformer';
+import { getPrimitiveFromOpenhabState, OpenhabState } from './outlet.openhab.enum';
+import { NativeSwitchService } from '../native-switch/native-switch.service';
 
 @Injectable()
 export class OutletService {
-    constructor(private readonly db: DatabaseService) {}
+    constructor(private readonly db: DatabaseService, private readonly nativeSwitchService: NativeSwitchService,) {}
 
     public async create(outletDto: OutletDto): Promise<Outlet> {
         const outlet = plainToClass(Outlet, outletDto);
@@ -51,5 +53,28 @@ export class OutletService {
             entities,
             page: listDto.page,
         };
+    }
+
+    public async setValueForOutlet(
+        name: string,
+        value: boolean,
+    ): Promise<Outlet> {
+        const outlet = await this.get(name);
+        const nativeValue = value ? 1 : 0;
+        await this.setValue(name, value);
+        await this.nativeSwitchService.setValueForAddress(
+            outlet.nativeAddress,
+            outlet.nativeChannel,
+            nativeValue,
+        );
+        if (outlet.multiChannel && outlet.nativeChannel2) {
+            await this.nativeSwitchService.setValueForAddress(
+                outlet.nativeAddress,
+                outlet.nativeChannel2,
+                nativeValue,
+            );
+        }
+        await this.nativeSwitchService.commitAddress(outlet.nativeAddress);
+        return outlet;
     }
 }

@@ -1,10 +1,13 @@
 import {
+    IsArray,
     IsBoolean,
     IsIn,
     IsNumber,
     IsOptional,
     IsString,
 } from 'class-validator';
+import { RollershutterState } from '../database/entities/Rollershutter';
+import { RollershutterOpenhabEnum } from './rollershutter.openhab.enum';
 
 export class RollershutterDto {
     @IsOptional({ groups: ['update'] })
@@ -27,4 +30,18 @@ export class RollershutterDto {
     @IsOptional({ always: true })
     @IsBoolean({ always: true })
     supportsHalf?: boolean;
+
+    @IsOptional({ groups: ['update'] })
+    @IsNumber({}, { always: true })
+    timeToOpen?: number;
+}
+
+export class DoRollershutterDto {
+    @IsString()
+    @IsIn([
+        RollershutterOpenhabEnum.STOP,
+        RollershutterOpenhabEnum.UP,
+        RollershutterOpenhabEnum.DOWN,
+    ])
+    value: RollershutterOpenhabEnum;
 }

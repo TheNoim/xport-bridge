@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import {RollershutterState} from '../database/entities/Rollershutter';
 import {RollershutterService} from './rollershutter.service';
 import {NativeSwitchService} from '../native-switch/native-switch.service';
@@ -12,6 +12,7 @@ export enum RollershutterDirections {
 @Injectable()
 export class RollershutterOpenhabService {
     constructor(
+        @Inject(forwardRef(() => RollershutterService))
         private readonly rollershutterService: RollershutterService,
         private readonly nativeSwitchService: NativeSwitchService,
     ) {}

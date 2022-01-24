@@ -120,6 +120,11 @@ export default {
                 formatter: value => (value ? 'Ja' : 'Nein'),
             },
             {
+                key: 'timeToOpen',
+                label: "Zeit (in Sekunden)",
+                sortable: true
+            },
+            {
                 key: 'id',
                 label: '',
             },

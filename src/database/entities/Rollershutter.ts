@@ -27,6 +27,21 @@ export class Rollershutter {
     @Enum(() => RollershutterState)
     state: RollershutterState = RollershutterState.STOP;
 
+    @Property({ onUpdate: () => new Date(), nullable: true })
+    updatedAt?: Date = new Date();
+
+    @Property({ default: 30 })
+    timeToOpen!: number;
+
+    @Property({ persist: false })
+    get assumeInMotion(): boolean {
+        if (this.updatedAt && this.state !== RollershutterState.STOP) {
+            return (new Date().getTime() - (1000 * this.timeToOpen)) < this.updatedAt.getTime();
+        } else {
+            return false;
+        }
+    }
+
     [PrimaryKeyType]: [string];
 
     constructor(name: string, nativeAddress: number, nativeChannel: Channels) {

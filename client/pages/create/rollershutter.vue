@@ -25,6 +25,9 @@
                 <label for="supportsHalf">Unterstützt Hälfte</label>
                 <b-select v-model="form.supportsHalf" :options="supportsHalfOptions" id="supportsHalf"></b-select>
 
+                <label for="timeToOpen">Zeit in Bewegung (in Sekunden)</label>
+                <b-input v-model="form.timeToOpen" type="number" required id="timeToOpen" number></b-input>
+
                 <b-spinner label="Spinning" v-if="loading"></b-spinner>
 
                 <p v-if="error" v-html="error"></p>
@@ -46,7 +49,8 @@
                 description: "",
                 nativeChannel: 1,
                 nativeAddress: null,
-                supportsHalf: false
+                supportsHalf: false,
+                timeToOpen: 15,
             },
             error: false,
             channelOptions: [
