@@ -24,6 +24,9 @@ export class Outlet {
     @Property({ default: false })
     value: boolean = false;
 
+    @Property({ default: "switch" })
+    homeAssistantType: string;
+
     [PrimaryKeyType]: [string];
 
     constructor(name: string, nativeAddress: number, nativeChannel: Channels) {

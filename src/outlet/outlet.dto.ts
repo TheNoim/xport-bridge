@@ -32,4 +32,8 @@ export class OutletDto {
     @IsOptional({ always: true })
     @IsBoolean({ always: true })
     multiChannel?: boolean;
+
+    @IsOptional({ always: true })
+    @IsString({ always: true })
+    homeAssistantType?: string;
 }

@@ -28,6 +28,9 @@
                 <label for="nativeChannel2" v-if="form.multiChannel">Channel 2</label>
                 <b-select v-if="form.multiChannel" v-model="form.nativeChannel2" :options="channelOptions" id="nativeChannel2"></b-select>
 
+                <label for="homeAssistantType" v-if="form.homeAssistantType">Art</label>
+                <b-select v-if='form.homeAssistantType' v-model='form.homeAssistantType' :options='homeAssistantTypeOptions' id='homeAssistantType'></b-select>
+
                 <b-spinner label="Spinning" v-if="loading"></b-spinner>
 
                 <p v-if="error" v-html="error"></p>
@@ -51,6 +54,7 @@
                 nativeAddress: null,
                 nativeChannel2: 1,
                 multiChannel: false,
+                homeAssistantType: "switch"
             },
             error: false,
             channelOptions: [
@@ -62,6 +66,10 @@
             multiChannelOptions: [
                 { value: false, text: '1 Channel' },
                 { value: true, text: '2 Channel' }
+            ],
+            homeAssistantTypeOptions: [
+                { value: "light", text: "Licht" },
+                { value: "switch", text: "Schalter" }
             ],
             loading: false,
         }),

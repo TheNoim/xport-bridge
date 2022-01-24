@@ -1,25 +1,37 @@
 <template>
-    <b-container>
+    <b-container fluid="xl">
         <div>
-            <b-table
-                striped
-                hover
-                :items="outlets"
-                :fields="fieldsOutlet"
-            >
+            <b-table striped hover :items="outlets" :fields="fieldsOutlet">
                 <template v-slot:cell(id)="data">
                     <b-button :to="`/edit/outlet/${data.value}`">Edit</b-button>
-                    <b-button variant="error" @click="() => deleteEntity('outlet', data.value)">Löschen</b-button>
+                    <b-button
+                        variant="error"
+                        @click="() => deleteEntity('outlet', data.value)"
+                        >Löschen</b-button
+                    >
                 </template>
             </b-table>
             <b-button to="/create/outlet/">Erstelle eine Steckdose</b-button>
-            <b-table striped hover :items="rollershutters" :fields="fieldsRollershutters">
+            <b-table
+                striped
+                hover
+                :items="rollershutters"
+                :fields="fieldsRollershutters"
+            >
                 <template v-slot:cell(id)="data">
-                    <b-button :to="`/edit/rollershutter/${data.value}`">Edit</b-button>
-                    <b-button variant="error" @click="() => deleteEntity('rollershutter', data.value)">Löschen</b-button>
+                    <b-button :to="`/edit/rollershutter/${data.value}`"
+                        >Edit</b-button
+                    >
+                    <b-button
+                        variant="error"
+                        @click="() => deleteEntity('rollershutter', data.value)"
+                        >Löschen</b-button
+                    >
                 </template>
             </b-table>
-            <b-button to="/create/rollershutter/">Erstelle einen Rollershutter</b-button>
+            <b-button to="/create/rollershutter/"
+                >Erstelle einen Rollershutter</b-button
+            >
         </div>
     </b-container>
 </template>
@@ -58,12 +70,27 @@ export default {
                 key: 'multiChannel',
                 label: 'Zwei Channel',
                 sortable: true,
-                formatter: (value) => value ? 'Ja' : 'Nein'
+                formatter: value => (value ? 'Ja' : 'Nein'),
+            },
+            {
+                key: 'homeAssistantType',
+                label: 'Art',
+                sortable: true,
+                formatter: value => {
+                    switch (value) {
+                        case "light":
+                            return "Licht";
+                        case "switch":
+                            return "Schalter";
+                        default:
+                            return value;
+                    }
+                }
             },
             {
                 key: 'id',
-                label: ''
-            }
+                label: '',
+            },
         ],
         rollershutters: [],
         fieldsRollershutters: [
@@ -90,13 +117,13 @@ export default {
                 key: 'supportsHalf',
                 label: 'Unterstützt Hälfte',
                 sortable: true,
-                formatter: (value) => value ? 'Ja' : 'Nein'
+                formatter: value => (value ? 'Ja' : 'Nein'),
             },
             {
                 key: 'id',
-                label: ''
-            }
-        ]
+                label: '',
+            },
+        ],
     }),
     async fetch() {
         await this.loadData();

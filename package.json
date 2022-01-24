@@ -8,7 +8,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build && nuxt-ts generate --spa",
     "build:nuxt": "nuxt-ts generate --spa",
-    "build:mikro-orm-cache": "mikro-orm cache:generate",
+    "build:mikro-orm-cache": "nest build && mikro-orm cache:generate",
     "nuxt:dev": "cross-env NODE_ENV=development nuxt-ts generate --spa --devtools",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -42,7 +42,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.9.0",
