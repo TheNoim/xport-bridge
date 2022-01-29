@@ -1,4 +1,4 @@
-FROM node:13-alpine as build
+FROM node:14-alpine as build
 
 WORKDIR /build_temp
 
@@ -25,7 +25,7 @@ RUN mkdir /build && \
     mv tsconfig.build.json /build && \
     mv nuxt.config.ts /build
 
-FROM node:13-alpine as app
+FROM node:14-alpine as app
 
 WORKDIR /app
 
