@@ -6,7 +6,7 @@ ADD yarn.lock .
 ADD package.json .
 ADD .yarnclean .
 
-RUN yarn
+RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn --pure-lockfile --non-interactive
 
 ADD . .
 
