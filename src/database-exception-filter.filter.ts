@@ -1,20 +1,23 @@
 import {
     ArgumentsHost,
     Catch,
-    ExceptionFilter,
+    ExceptionFilter, Logger,
     NotFoundException,
-    Response,
 } from '@nestjs/common';
 import { ValidationError } from 'mikro-orm';
 import {BaseExceptionFilter} from "@nestjs/core";
 
 @Catch(ValidationError)
 export class DatabaseExceptionFilterFilter extends BaseExceptionFilter implements ExceptionFilter {
+    private logger: Logger = new Logger(DatabaseExceptionFilterFilter.name);
+
     catch(exception: ValidationError, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const status = 500;
         const message = exception.message;
+
+        this.logger.error(message, exception.stack);
 
         if (message.includes('not found')) {
             const notFound = new NotFoundException(message);
