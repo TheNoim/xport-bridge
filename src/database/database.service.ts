@@ -17,7 +17,7 @@ export class DatabaseService implements OnModuleInit {
     }
 
     public getEm(): EntityManager {
-        return this.orm.em;
+        return this.orm.em.fork();
     }
 
     public getOrm(): MikroORM {
