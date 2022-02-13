@@ -7,7 +7,10 @@ ADD yarn.lock .
 ADD package.json .
 ADD .yarnclean .
 
-RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn --pure-lockfile --non-interactive
+RUN --mount=type=cache,target=/root/.yarn \
+    --mount=type=cache,target=/var/cache/apk/ \
+    apk add python2 make build-base --update-cache && \
+    YARN_CACHE_FOLDER=/root/.yarn yarn --pure-lockfile --non-interactive
 
 ADD . .
 

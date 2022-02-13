@@ -1,9 +1,12 @@
-import {MikroORMOptions} from "mikro-orm";
+import { MikroORMOptions } from '@mikro-orm/core';
 
 export default {
-    entitiesDirs: ['./dist/database/entities'],
-    entitiesDirsTs: ['./src/database/entities'],
+    entities: ['./dist/database/entities'],
+    entitiesTs: ['./src/database/entities'],
     dbName: 'xport-bridge.sqlite3',
     type: 'sqlite',
     debug: true,
+    cache: {
+        enabled: true,
+    },
 } as MikroORMOptions;

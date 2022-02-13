@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, PrimaryKeyType, Property } from 'mikro-orm';
+import { Entity, PrimaryKey, PrimaryKeyType, Property } from '@mikro-orm/core';
 import { Channels } from '../../xport.enum';
 
 @Entity()
@@ -24,7 +24,7 @@ export class Outlet {
     @Property({ default: false })
     value: boolean = false;
 
-    @Property({ default: "switch" })
+    @Property({ default: 'switch' })
     homeAssistantType: string;
 
     [PrimaryKeyType]: [string];

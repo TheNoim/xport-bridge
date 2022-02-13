@@ -1,4 +1,10 @@
-import { Entity, Enum, PrimaryKey, PrimaryKeyType, Property } from 'mikro-orm';
+import {
+    Entity,
+    Enum,
+    PrimaryKey,
+    PrimaryKeyType,
+    Property,
+} from '@mikro-orm/core';
 import { Channels } from '../../xport.enum';
 
 export enum RollershutterState {
@@ -36,7 +42,10 @@ export class Rollershutter {
     @Property({ persist: false })
     get assumeInMotion(): boolean {
         if (this.updatedAt && this.state !== RollershutterState.STOP) {
-            return (new Date().getTime() - (1000 * this.timeToOpen)) < this.updatedAt.getTime();
+            return (
+                new Date().getTime() - 1000 * this.timeToOpen <
+                this.updatedAt.getTime()
+            );
         } else {
             return false;
         }

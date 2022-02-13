@@ -1,10 +1,4 @@
-import {
-    Entity,
-    PrimaryKey,
-    PrimaryKeyType,
-    Property,
-    Unique,
-} from 'mikro-orm';
+import { Entity, PrimaryKey, PrimaryKeyType, Property } from '@mikro-orm/core';
 
 @Entity()
 export class NativeSwitch {

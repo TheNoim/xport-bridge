@@ -1,14 +1,16 @@
 import {
     ArgumentsHost,
     Catch,
-    ExceptionFilter, Logger,
+    ExceptionFilter,
+    Logger,
     NotFoundException,
 } from '@nestjs/common';
-import { ValidationError } from 'mikro-orm';
-import {BaseExceptionFilter} from "@nestjs/core";
+import { ValidationError } from '@mikro-orm/core';
+import { BaseExceptionFilter } from '@nestjs/core';
 
 @Catch(ValidationError)
-export class DatabaseExceptionFilterFilter extends BaseExceptionFilter implements ExceptionFilter {
+export class DatabaseExceptionFilterFilter extends BaseExceptionFilter
+    implements ExceptionFilter {
     private logger: Logger = new Logger(DatabaseExceptionFilterFilter.name);
 
     catch(exception: ValidationError, host: ArgumentsHost) {

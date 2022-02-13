@@ -6,9 +6,12 @@ import { ConfigModule } from './config/config.module';
 import { RollershutterModule } from './rollershutter/rollershutter.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
+import DatabaseConfig from './database/database-config';
 
 @Module({
     imports: [
+        MikroOrmModule.forRoot(DatabaseConfig),
         DatabaseModule,
         NativeSwitchModule,
         OutletModule,
