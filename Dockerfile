@@ -1,3 +1,4 @@
+# syntax = docker/dockerfile:1.2
 FROM node:14-alpine as build
 
 WORKDIR /build_temp
