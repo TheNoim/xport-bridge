@@ -1,4 +1,4 @@
-FROM node:14-alpine as build
+FROM node:16-alpine3.12 as build
 
 WORKDIR /build_temp
 
@@ -6,8 +6,8 @@ ADD yarn.lock .
 ADD package.json .
 ADD .yarnclean .
 
-RUN apk add python2 make build-base --update-cache && \
-    YARN_CACHE_FOLDER=/root/.yarn yarn --pure-lockfile --non-interactive
+RUN apk add python3 python2 make build-base --update-cache && \
+    yarn --pure-lockfile --non-interactive
 
 ADD . .
 
@@ -26,7 +26,7 @@ RUN mkdir /build && \
     mv tsconfig.build.json /build && \
     mv nuxt.config.ts /build
 
-FROM node:14-alpine as app
+FROM node:16-alpine3.12 as app
 
 WORKDIR /app
 
