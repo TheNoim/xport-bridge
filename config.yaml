@@ -1,0 +1,14 @@
+name: "XPort-Server"
+description: "The xport communication server!"
+version: "1.0.0"
+slug: "xport_server"
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+
+ports:
+  3000/tcp: 3000
